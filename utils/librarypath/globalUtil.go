@@ -1,12 +1,13 @@
 package librarypath
 
 import (
+	"strings"
+
 	"github.com/hashload/boss/consts"
 	"github.com/hashload/boss/env"
 	"github.com/hashload/boss/msg"
 	"github.com/hashload/boss/utils"
 	"golang.org/x/sys/windows/registry"
-	"strings"
 )
 
 const SearchPathRegistry = "Search Path"
