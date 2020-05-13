@@ -1,4 +1,4 @@
-[ ] init
+[-] init
 [ ] dependencies
 [ ] install
 [ ] login
@@ -8,3 +8,9 @@
 [ ] update
 [ ] upgrade
 [x] version
+-----------
+[x] Configuration
+[ ] Env
+[ ] GC
+[ ] Git
+[ ] SSH with key 

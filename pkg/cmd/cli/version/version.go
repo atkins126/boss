@@ -8,13 +8,11 @@ import (
 
 func NewVersionCommand() *cobra.Command {
 	return &cobra.Command{
-		Use:   "version",
-		Short: "Print the Boss version",
+		Use:     "version",
+		Short:   "Print the Boss version",
+		Aliases: []string{"v"},
 		Run: func(cmd *cobra.Command, args []string) {
 			printVersion()
-			// log.WithFields(log.Fields{
-			// 	"animal": "walrus",
-			// }).Info("A walrus appears")
 		},
 	}
 }

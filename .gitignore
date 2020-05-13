@@ -24,4 +24,5 @@ tmp/
 
 # End of https://www.gitignore.io/api/go
 
-./bin
+/bin
+/_dist
