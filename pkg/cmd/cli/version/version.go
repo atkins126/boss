@@ -1,8 +1,9 @@
 package version
 
 import (
+	"fmt"
+
 	"github.com/hashload/boss/internal/version"
-	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -19,8 +20,8 @@ func NewVersionCommand() *cobra.Command {
 
 func printVersion() {
 	v := version.Get()
-	log.Infoln("Version       ", v.Version)
-	log.Infoln("Git commit    ", v.GitCommit)
-	log.Infoln("Git tree state", v.GitTreeState)
-	log.Infoln("Go version    ", v.GoVersion)
+	fmt.Println("Version       ", v.Version)
+	fmt.Println("Git commit    ", v.GitCommit)
+	fmt.Println("Git tree state", v.GitTreeState)
+	fmt.Println("Go version    ", v.GoVersion)
 }

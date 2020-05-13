@@ -34,7 +34,7 @@ type Configuration struct {
 }
 
 type Auth struct {
-	UseSsh bool   `json:"use,omitempty"`
+	UseSsh bool   `json:"usesSsh"`
 	Path   string `json:"path,omitempty"`
 	User   string `json:"user,omitempty"`
 	Pass   string `json:"pass,omitempty"`
@@ -165,5 +165,13 @@ func (a *Auth) SetUser(user string) {
 		log.Error("Fail to crypt user.", err)
 	} else {
 		a.User = cUSer
+	}
+}
+
+func (a *Auth) SetPassword(pass string) {
+	if cPass, err := crypto.Encrypt(machineinfo.MachineIDByte, pass); err != nil {
+		log.Error("Fail to crypt user.", err)
+	} else {
+		a.Pass = cPass
 	}
 }
