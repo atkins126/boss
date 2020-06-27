@@ -1,7 +1,7 @@
 [-] init
 [ ] dependencies
 [ ] install
-[ ] login
+[x] login
 [x] root
 [ ] run
 [ ] uninstall
@@ -13,4 +13,6 @@
 [ ] Env
 [ ] GC
 [ ] Git
-[ ] SSH with key 
+[ ] SSH with key
+-----------
+[ ] login with test on url

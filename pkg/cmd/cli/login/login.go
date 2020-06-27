@@ -2,13 +2,13 @@ package login
 
 import (
 	"errors"
+	"os/user"
+	"path/filepath"
+
 	"github.com/hashload/boss/internal/pkg/configuration"
 	"github.com/manifoldco/promptui"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"path/filepath"
-	"os/user"
-
 )
 
 func NewLoginCommand(config *configuration.Configuration) *cobra.Command {
@@ -25,65 +25,64 @@ func NewLoginCommand(config *configuration.Configuration) *cobra.Command {
 			}
 
 			var auth *configuration.Auth
-	var repo string
-	if len(args) > 0 && args[0] != "" {
-		repo = args[0]
-		auth = config.Auth[args[0]]
-	} else {
-		repoPrompt := promptui.Prompt{
-			Label: "Url to login (ex: github.com)",
-			Validate: func(input string) error {
-				if input == "" {
-					return errors.New("Empty is not valid!!")
+			var repo string
+			if len(args) > 0 && args[0] != "" {
+				repo = args[0]
+				auth = config.Auth[args[0]]
+			} else {
+				repoPrompt := promptui.Prompt{
+					Label: "Url to login (ex: github.com)",
+					Validate: func(input string) error {
+						if input == "" {
+							return errors.New("Empty is not valid!!")
+						}
+						return nil
+					},
 				}
-				return nil
-			},
-		}
-		repo, err := repoPrompt.Run()
-		print(err)
-		auth = config.Auth[repo]
-	}
+				repo, err := repoPrompt.Run()
+				print(err)
+				auth = config.Auth[repo]
+			}
 
-	if auth == nil {
-		auth = &configuration.Auth{}
-	}
+			if auth == nil {
+				auth = &configuration.Auth{}
+			}
 
-	useSshPrompt := promptui.Prompt{
-		Label:     "Use SSH",
-		IsConfirm: true,
-	}
+			useSSHPrompt := promptui.Prompt{
+				Label:     "Use SSH",
+				IsConfirm: true,
+			}
 
-	option, err := useSshPrompt.Run()
-	print(option)
-	auth.UseSsh = err == nil
-	if auth.UseSsh {
-		sshPathPrompt := promptui.Prompt{
-			Label: "Path of ssh private key",
-			Default: getSshKeyPath(),
-			AllowEdit: true,
-		}
-		
-		sshPath, _ := sshPathPrompt.Run()
-		auth.Path = sshPath		 
-	} else {
-		passPrompt := promptui.Prompt{
-			Mask: rune('*'),
-			Label: "Password",
-		}
+			option, err := useSSHPrompt.Run()
+			print(option)
+			auth.UseSsh = err == nil
+			if auth.UseSsh {
+				sshPathPrompt := promptui.Prompt{
+					Label:     "Path of ssh private key",
+					Default:   getSSHKeyPath(),
+					AllowEdit: true,
+				}
 
-		userPrompt := promptui.Prompt{
-			Label: "Username",
-		}
+				sshPath, _ := sshPathPrompt.Run()
+				auth.Path = sshPath
+			} else {
+				passPrompt := promptui.Prompt{
+					Mask:  rune('*'),
+					Label: "Password",
+				}
 
-		user, _ := userPrompt.Run()
-		pass, _ := passPrompt.Run()
+				userPrompt := promptui.Prompt{
+					Label: "Username",
+				}
 
-		auth.SetUser(user)
-		auth.SetPassword(pass)
-	}
-	config.Auth[repo] = auth
-	config.SaveConfiguration()
+				user, _ := userPrompt.Run()
+				pass, _ := passPrompt.Run()
 
+				auth.SetUser(user)
+				auth.SetPassword(pass)
+			}
+			config.Auth[repo] = auth
+			config.SaveConfiguration()
 
 		},
 	}
@@ -92,7 +91,7 @@ func NewLoginCommand(config *configuration.Configuration) *cobra.Command {
 	return cmd
 }
 
-func getSshKeyPath() string {
+func getSSHKeyPath() string {
 	usr, e := user.Current()
 	if e != nil {
 		log.Fatal(e)
