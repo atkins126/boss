@@ -1,4 +1,4 @@
-package dependencies
+package bosspackage
 
 import "time"
 
@@ -24,6 +24,6 @@ type ProjectLock struct {
 	Installed map[string]LockedDependency `json:"installedModules"`
 }
 
-func LoadProjectLock(project *ProjectLock) *ProjectLock {
+func LoadProjectLock(project *BossPackage) *ProjectLock {
 	return &ProjectLock{}
 }

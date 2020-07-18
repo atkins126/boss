@@ -4,6 +4,7 @@ import (
 	"github.com/hashload/boss/internal/pkg/configuration"
 	"github.com/hashload/boss/pkg/cmd/cli/initialize"
 	"github.com/hashload/boss/pkg/cmd/cli/login"
+	"github.com/hashload/boss/pkg/cmd/cli/upgrade"
 	"github.com/hashload/boss/pkg/cmd/cli/version"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -27,6 +28,7 @@ func NewBossCommand(name string) *cobra.Command {
 	root.AddCommand(version.NewVersionCommand())
 	root.AddCommand(initialize.NewCommand())
 	root.AddCommand(login.NewLoginCommand(config))
+	root.AddCommand(upgrade.NewUpgradeCommand())
 
 	return root
 }
