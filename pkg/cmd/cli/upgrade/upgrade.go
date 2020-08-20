@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func NewUpgradeCommand() *cobra.Command {
+func NewCmdUpgrade() *cobra.Command {
 	var preRelease bool
 	upgradeCmd := &cobra.Command{
 		Use:   "upgrade",

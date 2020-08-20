@@ -15,7 +15,7 @@ import (
 	myI "github.com/hashload/boss/internal/pkg/input"
 )
 
-func NewLoginCommand(config *configuration.Configuration) *cobra.Command {
+func NewCmdLogin(config *configuration.Configuration) *cobra.Command {
 	var removeLogin bool
 	ui := &input.UI{
 		Writer: os.Stdout,
